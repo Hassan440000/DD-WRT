@@ -3,7 +3,7 @@ TOP_DIR:=$(CURDIR)
 SVN := svn
 SRC_DIR := $(TOP_DIR)/dd-wrt
 SRC_URL := svn://svn.dd-wrt.com/DD-WRT
-REVISION := HEAD
+REVISION := r53879
 
 BUILD_DIR := $(SRC_DIR)/src/router
 LINUX_DIR := $(SRC_DIR)/src/linux/universal/linux-4.14
@@ -30,6 +30,8 @@ else ifeq ($(PROFILE),dir-882-r1)
   $(eval $(call DefineProfile,dir-882,DIR-882-R1,.config,.config))
 else ifeq ($(PROFILE),dir-882-a1)
   $(eval $(call DefineProfile,dir-882,DIR-882-A1,.config,.config))
+else ifeq ($(PROFILE),nokia-a040w-q)
+  $(eval $(call DefineProfile,nokia-a040w-q,nokia-a040w-q-mt76,mt76.config,mt76.config))
 else
   $(error "Unknown PROFILE=$(PROFILE)")
 endif
