@@ -1,13 +1,12 @@
 /dts-v1/;
 
 #include "mt7621.dtsi"
-
 #include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/input/input.h>
+
 
 / {
 	compatible = "nokia,a040w-q", "ralink,mt7621-soc";
-	model = "Nokia A40W-Q";
+	model = "Nokia A-040W-Q";
 
 	memory@0 {
 		device_type = "memory";
@@ -45,9 +44,11 @@
 	};
 };
 
+
+
 &nand {
 	status = "okay";
-	
+
 	partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;
@@ -56,41 +57,42 @@
 		partition@0 {
 			label = "u-boot";
 			reg = <0x0 0x80000>;
+			read-only;
 		};
 
 		partition@80000 {
 			label = "u-boot-env";
 			reg = <0x80000 0x80000>;
+			read-only;
 		};
-
+		
 		factory: partition@100000 {
 			label = "factory";
 			reg = <0x100000 0x40000>;
 		};
+		
 		partition@140000 {
 			label = "linux";
-			reg = <0x140000 0x2c00000>;
+			reg = <0x140000 0x2000000>;
 		};
-		partition@340000 {
-			label = "ubi";
-			reg = <0x2d40000 0x2800000>;
-		};
-		partition@500000 {
-			label = "nvram";
-			reg = <0x554000 0x100000>;
-		};
-		partition@700000 {
-			label = "ddwrt";
-			reg = <0x654000 0x1ac000>;
-		};
-		partition@0000000 {
-			label = "fullflash";
-			reg = <0x000000 0x8000000>;
-		};
-	};
-	
-};
 
+		partition@0x540000 {
+			label = "ubi";
+			reg = <0x540000 0x1c00000>;
+		};
+		
+		partition@2140000 {
+			label = "nvram";
+			reg = <0x2140000 0x200000>;
+		};
+		
+		partition@2340000 {
+			label = "ddwrt";
+			reg = <0x2340000 0x4f00000>;
+		};
+
+	};
+};
 
 &pcie {
 	status = "okay";
@@ -99,16 +101,17 @@
 &pcie0 {
 	wifi@0,0 {
 		compatible = "mediatek,mt76";
-		reg = <0x0000 0 0 0 0>;
+		reg = <0x0 0 0 0 0>;
 		mediatek,mtd-eeprom = <&factory 0x0>;
 		mtd-mac-address = <&factory 0x4>;
 	};
 };
 
+
 &pinctrl {
 	state_default: pinctrl0 {
 		gpio {
-			ralink,group = "uart2", "uart3", "jtag", "wdt";
+			ralink,group = "uart3", "uart2", "jtag", "wdt";
 			ralink,function = "gpio";
 		};
 	};

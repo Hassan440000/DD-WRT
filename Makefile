@@ -14,6 +14,7 @@ define DefineProfile
   DTS=$(2)
   CONFIG=$(3)
   KCONFIG=$(4)
+  TYPE=$(5)
 endef
 
 ifneq ($(wildcard .config),)
@@ -21,17 +22,19 @@ ifneq ($(wildcard .config),)
 endif
 
 ifeq ($(PROFILE),k2p-mt76)
-  $(eval $(call DefineProfile,k2p,K2P-mt76,mt76.config,mt76.config))
+  $(eval $(call DefineProfile,k2p,K2P-mt76,mt76.config,mt76.config,spi))
 else ifeq ($(PROFILE),k2p)
-  $(eval $(call DefineProfile,k2p,K2P,.config,.config))
+  $(eval $(call DefineProfile,k2p,K2P,.config,.config,spi))
 else ifeq ($(PROFILE),k2p-mini)
-  $(eval $(call DefineProfile,k2p,K2P,mini.config,.config))
+  $(eval $(call DefineProfile,k2p,K2P,mini.config,.config,spi))
 else ifeq ($(PROFILE),dir-882-r1)
-  $(eval $(call DefineProfile,dir-882,DIR-882-R1,.config,.config))
+  $(eval $(call DefineProfile,dir-882,DIR-882-R1,.config,.config,spi))
 else ifeq ($(PROFILE),dir-882-a1)
-  $(eval $(call DefineProfile,dir-882,DIR-882-A1,.config,.config))
+  $(eval $(call DefineProfile,dir-882,DIR-882-A1,.config,.config,spi))
 else ifeq ($(PROFILE),nokia-a040w-q)
-  $(eval $(call DefineProfile,nokia-a040w-q,nokia-a040w-q-mt76,mt76.config,mt76.config))
+  $(eval $(call DefineProfile,nokia-a040w-q,nokia-a040w-q-mt76,mt76.config,mt76.config,nand))
+else ifeq ($(PROFILE),R6220)
+  $(eval $(call DefineProfile,R6220,R6220,mt76.config,mt76.config,nand))
 else
   $(error "Unknown PROFILE=$(PROFILE)")
 endif
